@@ -1,0 +1,609 @@
+---
+title: "Lecture 2 Probability"
+author: "Prof. Jason Gong"
+date: "2025-01-20"
+widescreen: true
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library("plotrix")
+```
+
+## Bernoulli distribution
+
+Bernoulli distribution is one of the simplest probability distribution.
+
+Ex.
+
+1. Consider tossing a coin, one out of two possible events will occur, head or tail.
+2. You go to a casino, one out of two possible will occur, you win or you lost. 
+3. A random human is being selected and age is recorded, one out of two outcomes will occur, adult or non-adult. 
+
+These types of experiment or processes are called Bernoulli trial.
+
+The two event classes and their associated probability probabilities a Bernoulli process. 
+
+## Bernoulli probability
+In general we call one event in a Bernoulli process a "success" as 1 with probability $p$, and call the other "failure" as 0 with probability $q$.
+
+We always have $q=1-p$
+
+## Bernoulli distribution
+
+The probability distribution of a Bernoulli variable:
+
+$$
+f(x)=
+\begin{cases}
+    p & x=1\\
+    q & x=0
+\end{cases}
+$$
+
+```{r}
+A <- c(0.3, 0.7)
+ 
+# Plot the bar chart
+barplot(A, names=c("1", "0"),  xlab = "X", ylab = "Probability")
+text(x=0.7, y=0.35, labels="p", cex=2)
+
+text(x=1.9, y=0.6, labels="q", cex=2)
+```
+
+## Bernoulli variable
+
+- Expected value of a Bernoulli variable
+
+$$
+\begin{align}
+E[X] & = \sum_{x=0,1}xp(x)
+\\
+& =1*p + 0*q
+\\
+& =p
+\end{align}
+$$
+
+- Variance of Bernoulli variable
+
+$$
+\begin{align}
+Var(X) & = E[X^2]-E[X]^2
+\\
+& =\sum_{x=0,1}x^2p(x) - p^2
+\\
+& =p-p^2
+\\
+& =p(1-p)=pq
+\end{align}
+$$
+
+
+## Binomial Process
+If we repeatedly conduct the same Bernoulli experiment $N$ times, and each repetition is ***identical*** and ***independent***.
+
+- **Identical**
+  - each repetition has the same Bernoulli distribution
+- **Independent**
+  - every repetition has no impact on other repetition
+  
+We can think about this process as repeatedly tossing the same coin and record its outcome. 
+
+## Binomial Variable
+Now, we define a random variable $X$ as the number of success (1) in $N$ repetition of a Bernoulli process with success probability $p$, and failure probability as $q$. This random variable is called Binomial variable and it has a binomial distribution. 
+
+## Binomial probability
+Consider $N=2$
+
+Outcome ${HH, LL, HL, LH}$
+
+$$
+P(HH) = 1/2 * 1/2 = 1/4
+\\
+P(HL)= 1/4
+\\
+P(LH) = 1/4
+\\
+P(LL) = 1/4
+$$
+
+## Binomial probability
+For this binomial variable, it has the following probability distribution
+
+$$
+p(0) = P(LL) = 1/4
+\\
+p(1)= P(HL) + P(LH) = 1/2
+\\
+p(2) = P(HH) = 1/4
+$$
+
+```{r}
+x <- 0:2
+
+prob <- c(1/4, 1/2, 1/4)
+
+plot(x, prob,
+     type='h',
+     xlab = "Number of success of tossing a fair coin twice",
+        ylab = "Probability",
+     main="Binomial distribution",
+        ylim=c(0, 0.5))
+```
+
+## Binomial Distribution
+In the previous lecture, we have learned that if we are tossing a fair coin $N$ times. 
+
+The number of success $X$ follows a probability distribution $P(X=k)$
+
+$$
+P(X=k) = {N\choose k}(\frac{1}{2})^N
+$$
+
+If we are tossing a coin with success probability $p$ for $N$ times. 
+
+The number of success $X$ follows a probability distribution $P(X=k)$
+
+$$
+P(X=k) = {N\choose k}p^k(1-p)^{N-k}
+$$
+
+
+## Binomial Variable
+For a binomial variable of $N$ repetition and sucess probability $p$. 
+
+Remember
+
+$$
+E[X+Y] = E[X] + E[Y]
+$$
+
+It has expected value
+
+$$
+\begin{align}
+E[X] & = E[X_1 + X_2 + X_3 + ... + X_N]
+\\
+& = E[X_1] + E[X_2] + ... + E[X_N]
+\\
+& = p + p + p + ... + p = Np
+\end{align}
+$$
+
+## Binomial Variable
+For a binomial variable of $N$ repetition and success probability $p$. 
+
+Remember, if $X$ and $Y$ are indenpendent
+
+$$
+Var(X+Y) = Var(X) + Var(Y) 
+$$
+
+It has variance
+
+$$
+\begin{align}
+Var(X) & = Var(X_1 + X_2 + X_3 + ... + X_N)
+\\
+& = Var(X_1) + Var(X_2) + ... + Var(X_N)
+\\
+& = NVar(X_i) = Np(1-p)
+\end{align}
+$$
+
+
+## Binomial Variable exercise
+Tossing a coin with success probability $p=0.3$ repetitively for $N=10$ times. 
+
+1. What is the probability of getting exactly 5 successes?
+2. What is the probability of getting equal or more than 8 successes? 
+3. What is the probability of getting a number of successes that is more or equal to 3 and less or equal to 7?
+4. What is the expected value of number of successes?
+5. What is the variance of the number of successes?
+
+
+## Binomial Variable
+If we increase the number of repetition in Binomial variable with success probability $p$, what will happen?
+
+If we toss a coin ($p=0.2$) 10 times, 100 times, 1000 times.
+
+```{r echo=FALSE}
+par(mfrow = c(1, 3))
+
+x1 <- 0:10
+prob1 <- dbinom(x1, 10, 0.2)
+x2 <- 0:100
+prob2 <- dbinom(x2, 100, 0.2)
+x3 <- 0:1000
+prob3 <- dbinom(x3, 1000, 0.2)
+
+plot(x1, prob1,
+     type='h',
+     xlab = "x",
+        ylab = "Probability",
+     main="N = 10",
+        ylim=c(0, 0.5))
+
+plot(x2, prob2,
+     type='h',
+     xlab = "x",
+        ylab = "Probability",
+     main="N = 100",
+        ylim=c(0, 0.1),
+     xlim=c(0, 40))
+
+plot(x3, prob3,
+     type='h',
+     xlab = "x",
+        ylab = "Probability",
+     main="N = 1000",
+        ylim=c(0, 0.05),
+     xlim=c(100, 300))
+```
+
+## Galton Board 
+
+Lets see an experiment called **Galton Board**
+
+https://www.youtube.com/watch?v=EvHiee7gs9Y
+
+## Normal Variable
+One interesting observation is that as $N \rightarrow \infty$, the binomial distribution will approximate to a continous distribution with $Np$ as its mean, and $Np(1-p)$ as its variance.
+
+This distribution is called **normal distribution**. 
+
+## Normal Distribution
+A normal distribution is defined by two parameters: **Mean** $\mu$ and **Variance** $\sigma^2$.
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
+$$
+
+```{r}
+x <- seq(-4, 4, length=100)
+
+y <- dnorm(x)
+
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Normal Distribution with Mean μ and Variance σ^2")
+axis(1, at = -3:3, labels = c("μ-3σ", "μ-2σ", "μ-σ", "μ", "μ+σ", "μ+2σ", "μ+3σ"))
+
+```
+
+## Normal Distribution
+
+For a random variable $X$ that follows a normal distribution $N$, with parameter $\mu$ and $\sigma^2$.
+
+We denote it as $X\sim N(\mu, \sigma^2)$
+
+Normal distribution is one of the most important distributions in statistics. Many real world data follows a normal distribution such as US adults height, job satisfaction, SAT scores.
+
+But **WHY**?
+
+
+## Normal Distribution Properties
+
+- A normal distribution with mean $\mu$ and variance $\sigma^2$
+
+$$
+E[X] = \mu
+\\
+Var(X) = \sigma^2
+$$
+
+## Normal Distribution Properties
+- Central Tendency
+
+Normal distribution is unimodal, symmetric, and bell shaped. 
+
+**Unimodal**: Has only one mode
+
+**Symmetric**: The probability density function of the left side of its mean is symmetric to the right side.
+
+**Bell Shaped**: Probability density function peaks at its center mean, and drops away from its mean. 
+
+Mean = median = mode
+
+## Normal Distribution Properties
+
+- Linear transofmation of a normal distribution
+
+if $X \sim N(\mu, \sigma^2)$
+
+$$
+aX+b \sim N(a\mu +b, a^2\sigma^2)
+$$
+
+## Standard Normal Distribution (Z distribution)
+
+Every normal distribution can be considered as a linear transformation from standardized normal distribution.
+
+A standard normal distribution is called $Z$ distribution
+
+$$
+Z = N(0, 1)
+$$
+with mean $\mu = 0$ and variance $\sigma^2=1$.
+
+$$
+Y = \sigma X+\mu
+\\
+X \sim Z = N(0,1)
+\\
+Y \sim N(\mu, \sigma^2)
+\\
+\frac{Y-\mu}{\sigma}\sim N(0,1)
+$$
+
+## Standard Normal Distribution (Z distribution)
+
+A Z distribution is following a probability density function
+
+$$
+f(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}
+$$
+
+```{r}
+x <- seq(-4, 4, length=100)
+
+y <- dnorm(x)
+
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Z Distribution with Mean 0 and Variance 1")
+axis(1, at = -3:3, labels = c("-3", "-2", "-1", "0", "1", "2", "3"))
+
+```
+
+## Normal Distribution Properties
+- Linear combination of normal distributed random variables
+
+Any linear combination of independent and normally distributed random variables is normally distributed
+
+if $X_1, X_2, X_3, ..., X_n$ are indentical and independent distributed 
+
+$$
+X_i \sim N(\mu, \sigma^2)
+\\
+Y = \sum_{i=1}^{n}X_i \sim N(n\mu, n\sigma^2)
+\\
+E[Y] = n\mu
+\\
+Var[Y] = \sum_{i=1}^{n}Var(X_i) = n\sigma^2
+$$
+
+
+## Central Limit Theorem
+Why so many observed data follows a normal distribution? 
+
+Central Limit Theorem (CLT)
+
+For a sequence of random variables $X_1, X_2, X_3, ..., X_n$ to be identical and independently distributed. Each has a mean of $\mu$ and variance $\sigma^2$, thus its sample mean $\bar{X} = \sum_{i}^{n}X_i / n$ follows a normal distribution.
+
+$$
+\bar{X} \sim N(\mu, \sqrt{n}\sigma^2)
+\\
+n\bar{X} \sim N(n\mu, n\sigma^2)
+\\
+\frac{n\bar{X}-n\mu}{\sqrt{n}\sigma}\sim Z
+$$
+
+We can consider many observed data as a combination of $i.i.d$ random variables. 
+
+## Chi-squared Distribution
+
+If $Z_1, Z_2, Z_3, ..., Z_n$ are independent standard normal variables, then $Y=\sum_{i=1}^{n}Z_i^2$ is said to have a chi-squared distribution $\chi_n^2$ with parameter degree of freedom as $n$. 
+
+A chi squared distribution $\chi_n^2$ follows a probability density function $f(x, n)$.
+
+$$
+f(x, n) = \
+\begin{cases}
+    \frac{x^{n/2-1}e^{-x/2}}{2^{n/2}\Gamma(n/2)} & x>0\\
+    0 & otherwise
+\end{cases}
+\\
+\Gamma(z)=\int_{0}^{\infty}t^{z-1}e^{-t}dt
+$$
+
+## Chi-squared Distribution 
+
+
+```{r}
+
+x <- seq(0, 8, length.out = 100)
+
+curve(dchisq(x, df = 1), x, col = "blue", 
+      ylab = "Density", xlab = "Chi-squared value", 
+      main = "Chi-squared Distributions with Different Degrees of Freedom",
+      xlim=c(0,8), ylim=c(0, 0.5))
+curve(dchisq(x, df = 2), x, col = "red", add = TRUE)
+curve(dchisq(x, df = 3), x, col = "green", add = TRUE)
+curve(dchisq(x, df = 4), x, col = "orange", add = TRUE)
+curve(dchisq(x, df = 5), x, col = "pink", add = TRUE)
+curve(dchisq(x, df = 6), x, col = "purple", add = TRUE)
+curve(dchisq(x, df = 7), x, col = "brown", add = TRUE)
+
+legend("topright", legend = c("df=1", "df=2", "df=3", "df=4", "df=5", "df=6", "df=7"),
+       col = c("blue", "red", "green", "orange", "pink", "purple", "brown"), lty = 1)
+```
+
+## F Distribution
+
+The F distribution is governed by two degree of freedom parameters $d_1$ and $d_2$. 
+
+A F distributed variable $X$ as ratio of two scaled Chi square variables. 
+
+$$
+X=\frac{U_1/d_1}{U_2/d_2}
+\\
+U_1 \sim \chi_{d_1}^2
+\\
+U_2 \sim \chi_{d_2}^2
+$$
+where $U_1$ and $U_2$ are independent chi squared distribution with degree of freedom $d_1$ and $d_2$.
+
+
+## F Distribution
+A F distribution variable $X$ has the following probability density function $f(x, d_1, d_2)$ with parameter $d_1$, $d_2$. 
+
+$$
+f(x, d_1, d_2) = \frac{1}{B(\frac{d_1}{2}, \frac{d_2}{2})}(\frac{d_1}{d_2})^{\frac{d_1}{2}}x^{\frac{d_1}{2}-1}(1+\frac{d_1}{d_2}x)^{-\frac{d_1+d_2}{2}}
+\\
+B(a,b) = \int_{0}^{1}t^{a-1}(1-t)^{b-1}dt
+$$
+
+## F Distribution
+
+```{r}
+
+x <- seq(0, 5, length.out = 100)
+
+curve(dchisq(x, 1, 1), x, col = "blue", 
+      ylab = "Density", xlab = "F value", 
+      main = "F Distributions with Different Degrees of Freedom",
+      xlim=c(0,8), ylim=c(0, 0.5))
+curve(dchisq(x, 2, 1), x, col = "red", add = TRUE)
+curve(dchisq(x, 5, 2), x, col = "green", add = TRUE)
+curve(dchisq(x, 10, 1), x, col = "orange", add = TRUE)
+curve(dchisq(x, 100, 100), x, col = "pink", add = TRUE)
+
+legend("topright", legend = c("d1=1, d2=1", "d1=2, d2=1", "d1=5, d2=2", "d1=10, d2=1", "d1=100, d2=100"),
+       col = c("blue", "red", "green", "orange", "pink"), lty = 1)
+```
+
+## Probability Density Function and Cumulative Density Function
+
+Now we have known the probability density function for Normal distribution $N(\mu,\sigma^2)$, standard normal distribution $Z$, chi squared distribution $\chi_k^2$, and F distribution $F_{d_1,d_2}$
+
+How do we calculate the probability density, and the probability of $P(b\leq X\leq a)$?
+
+## pdf and cdf
+
+We do not calculate!
+
+We use softwares (R or Python) to calculate! 
+
+To calculate the probability density $f(0.5)$ for a normal distributed variable $X \sim N(1,1)$
+
+```{r echo=TRUE}
+dnorm(0.5, mean=1, sd=1)
+```
+
+## pdf and cdf
+To calculate the probability density $f(0.5)$ for a normal distributed variable $X \sim N(1,1)$
+
+```{r echo=FALSE}
+x <- seq(-3, 5, length=100)
+
+y <- dnorm(x, mean=1, sd=1)
+
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Normal Distribution with Mean 1 and Variance 1")
+axis(1, at = -2:4, labels = c("-2", "-1", "0", "1", "2", "3", "4"))
+arrows(x0=0.5,y0=-0.1,x1=0.5,y1=dnorm(0.5, mean=1, sd=1), col="red", length = 0.1, angle=20)
+points(x=0.5, y = dnorm(0.5, mean=1, sd=1), type = "p", col="red")
+text(x=-1, y=dnorm(0.5, mean=1, sd=1), labels="f(0.5)=0.352", cex=1.5)
+```
+
+## pdf and cdf
+To calculate the cumulative probability $F(0.5) = P(X\leq 0.5)$ for a normal distributed variable $X \sim N(1,1)$
+
+```{r echo=TRUE}
+pnorm(0.5, mean=1, sd=1)
+```
+
+## pdf and cdf
+
+```{r}
+x <- seq(-3, 5, length=100)
+y <- dnorm(x, mean=1, sd=1)
+x_range <- x[x<=0.5]
+
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Normal Distribution with Mean 1 and Variance 1")
+axis(1, at = -2:4, labels = c("-2", "-1", "0", "1", "2", "3", "4"))
+polygon(c(x[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=1), 0), 
+        col = "pink") 
+text(x=-1.5, y=0.3, labels="P(X<=0.5) = 0.309", cex=1.5)
+
+```
+
+
+## pdf and cdf
+To calculate the probability $P(X \ge 0.5)$ for a normal distributed variable $X \sim N(1,1)$
+
+$$
+P(X\ge 0.5) = 1 - P(X<0.5)
+$$
+```{r echo=TRUE}
+1-pnorm(0.5, mean=1, sd=1)
+```
+
+## pdf and cdf
+
+```{r}
+x <- seq(-3, 5, length=100)
+y <- dnorm(x, mean=1, sd=1)
+x_range <- x[x>=0.5]
+
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Normal Distribution with Mean 1 and Variance 1")
+axis(1, at = -2:4, labels = c("-2", "-1", "0", "1", "2", "3", "4"))
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=1), 0), 
+        col = "pink") 
+text(x=3.5, y=0.3, labels="P(X>=0.5) = 0.691", cex=1.5)
+
+```
+
+## pdf and cdf
+To calculate the probability $P(-1\le X \le 2)$ for a normal distributed variable $X \sim N(1,1)$
+
+$$
+P(-1\le X \le 2) = P(X\le 2) - P(X\le -1)
+$$
+```{r echo=TRUE}
+pnorm(2, mean=1, sd=1)-pnorm(-1, mean=1, sd=1)
+```
+
+## pdf and cdf
+
+```{r}
+x <- seq(-3, 5, length=100)
+y <- dnorm(x, mean=1, sd=1)
+x_range <- x[(x>=-1) & (x<=2)]
+
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Normal Distribution with Mean 1 and Variance 1")
+axis(1, at = -2:4, labels = c("-2", "-1", "0", "1", "2", "3", "4"))
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=1), 0), 
+        col = "pink") 
+text(x=3.5, y=0.3, labels="P(-1<=X<=2) = 0.819", cex=1.5)
+
+```
+
+## pdf and cdf
+
+We can follow the same logit to calculate the pdf and probabilities for Chi-squared distributed Variable.
+
+```{r echo=TRUE}
+dchisq(0.5, df=1)
+pchisq(0.5, df=1)
+```
+
+## pdf and cdf
+
+We can follow the same logit to calculate the pdf and probabilities for F distributed Variable.
+
+```{r echo=TRUE}
+df(0.5, df1=1, df2=10)
+pf(0.5, df=1, df2=10)
+```

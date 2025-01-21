@@ -1,0 +1,117 @@
+---
+title: "COMM611_assignment_1_probability_theory"
+author: "Xuanjun Gong"
+date: "2025-01-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Assignment 1
+
+### Q1
+Toss a fair coin 4 times, what is the probability of getting at least one head?
+
+### Q2
+Toss a fair coin 10 times, what is the probability of 3 heads?
+
+### Q3
+A box contains 2 red balls, 5 blue balls, and 10 yellow balls. 
+
+1. Draw two balls simultaneously, what is the probability of getting 2 yellow balls?
+2. Each ball in this box has a unique number label. Drawing 3 balls out of this box, how many possible combinations we can get for the 3 drawn balls (ignoring the order of the balls drawn)?
+
+### Q4
+In a class of 30 students, 18 like math, 12 like sciences, and 8 like both. Given a student likes science, what is the probability he/she also likes math?
+
+### Q5
+A test for HIV has 98% accuracy rate (98% of the sick people will correctly tested positive and 98% of the healthy people will correctly tested negative). The disease will affect 1 person every 10,000 people. If a person tested positive, what is the probability that this person is truly affected? 
+
+### Q6
+Expected value
+A small business sells two products, Product A and Product B. Each day, the number of sales for each product is random and independent. The details are as follows:  
+
+- The number of daily sales of **Product A** (denoted \( X \)) follows this distribution:  
+  \[
+  P(X = 0) = 0.2, \, P(X = 1) = 0.5, \, P(X = 2) = 0.3
+  \]  
+  Each sale generates a profit of \$20.  
+
+- The number of daily sales of **Product B** (denoted \( Y \)) follows this distribution:  
+  \[
+  P(Y = 0) = 0.3, \, P(Y = 1) = 0.4, \, P(Y = 2) = 0.3
+  \]  
+  Each sale generates a profit of \$15.  
+
+#### Questions  
+
+1. Compute the expected number of sales for Product A (\( E(X) \)) and Product B (\( E(Y) \)).  
+2. Find the expected daily profit for each product (\( E(Profit_A) \) and \( E(Profit_B) \)), considering the profit per sale.  
+3. Calculate the total expected daily profit for both products combined.  
+4. If the business introduces a flat daily operational cost of \$50, write the expression for the **net profit** and compute its expected value.  
+
+### Q7
+1. Calculate the variance for the sales for Product A and Product B in Q6.1.
+2. Calculate the variance for the expected daily profit for each product in Q6.2. 
+3. Calculate the variance for the expected daily profit for both products combined in Q6.3.
+
+### Q9
+A survey records the number of books read by 50 students over the summer. The data is summarized in the following frequency table:
+
+| Number of Books (\( x \)) | Frequency (\( f \)) |
+|---------------------------|---------------------|
+| 0                         | 8                   |
+| 1                         | 12                  |
+| 2                         | 15                  |
+| 3                         | 10                  |
+| 4                         | 5                   |
+
+#### Questions  
+1. Draw a bar plot for the frequency table. 
+2. What is the expected value for the number of books that were read by a student?
+3. Assume this empirical observed probability distribution is truly the theoretical probability distribution for the number of books, what is the variance of the number of books read by a student?
+
+### Q10
+You are playing Aeroplane chess with your friends with a fair 6 sided dice. In this game, if a player roll a number 6 in this dice, it is considered a success and you can start moving your airplane out of the base. 
+
+Now consider you and 6 other players are rolling the dice in a row one by one for one round. 
+
+a. What is the probability of 4 players rolled a six in the first round?
+b. What is the probability of at least 4 players rolled a six in the first round? 
+c. What is the probability of the number of players rolled a six is less than 6 and more than 2?
+d. What is the expected value of number of players that moved their airplane in the first round?
+e. What is the variance of number of players that moved their airplane in the first round?
+
+### Q11
+Draw the probability mass function of the variable (number of players sucecssfully moved their airplane in the first round) in Q10. 
+
+### Q12
+For a random variable $X$, where $X \sim N(2, 100)$.
+
+1. What is the probability $P(X<=2)$?
+2. What is the probability $P(X>=2)$?
+3. Write down the R code to calculate the probability $P(-10\le X\le 50)$
+*Recall the cumulative probability function $P(X\le x)$ for normal variable, R code is pnorm(x, mean=$\mu$, sd=$\sigma$)*
+
+### Q13
+For a random variable $X$, where $X \sim F_{1, 20}$.
+
+1. Write down the R code to calculate the probability $P(X<=2)$?
+2. Write down the R code to calculate the probability $P(X>=2)$?
+3. Write down the R code to calculate the probability $P(1\le X\le 3)$
+
+*Recall the cumulative probability function $P(X\le x)$ for F distributed, R code is pnorm(x, df1=$d_1$, df2=$d_2$)*
+
+
+### Q13
+For a $Z$ distributed random variable $X \sim N(0, 1)$. Given that $P(X\le -1) = 0.158$
+
+1. What is the probability $P(X\ge1)$? Do it without consulting softwares or tables. 
+2. What is the probability $P(0\le X\le 1)$? Do it without consulting softwares or tables. 
+
+### Q14
+For a normal distributed random variable $X \sim N(2, 10)$. Given that $P(X\le -17.6) = 0.025$. Find the value $k$ where $P(-17.6\le X\le k) = 0.95$.
+
