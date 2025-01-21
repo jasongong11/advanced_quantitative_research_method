@@ -2,7 +2,9 @@
 title: "COMM611_assignment_1_probability_theory"
 author: "Xuanjun Gong"
 date: "2025-01-20"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
