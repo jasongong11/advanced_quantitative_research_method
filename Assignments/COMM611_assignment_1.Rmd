@@ -105,7 +105,7 @@ For a random variable $X$, where $X \sim F_{1, 20}$.
 2. Write down the R code to calculate the probability $P(X>=2)$?
 3. Write down the R code to calculate the probability $P(1\le X\le 3)$
 
-*Recall the cumulative probability function $P(X\le x)$ for F distributed, R code is pnorm(x, df1=$d_1$, df2=$d_2$)*
+*Recall the cumulative probability function $P(X\le x)$ for F distributed, R code is pf(x, df1=$d_1$, df2=$d_2$)*
 
 
 ### Q13
