@@ -1019,7 +1019,7 @@ $$
 
 ## Frequency
 
-When we have a random variable with unknown probability function kike the distribution of US adults height. 
+When we have a random variable with unknown probability function like the distribution of US adults height. 
 
 How do you access its probability distribution?
 
