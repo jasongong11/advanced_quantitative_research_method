@@ -1,0 +1,600 @@
+---
+title: "Lecture 3 Hypothesis Testing"
+author: "Xuanjun Gong"
+date: "2025-02-03"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Statistics
+
+*"Statistics is a science of data collection analysis, and interpretation"*
+
+2013 London workshop report on the Future of the Statistical Sciences
+
+What is the difference between probability theory and statistics?
+
+## Statistics
+
+Difference between probability theory and statistics
+
+-   In probability problems, we know that random mechanisms produced the data (flip a coin).
+-   In statistics problem, the data comes from random mechanisms that is unknown, thus needs to be inferred.
+
+We assume the random mechanism, and infer the parameters of the random process.
+
+## Statistics Example
+
+Flip a coin with $p=P(head)$
+
+<img src="img/coin_toss.png" width="40%"/>
+
+We can draw random samples from this distribution to estimate the parameter $p$.
+
+## Statistics Example
+
+What is the distribution for US adults' height?
+
+We may assume a normal distribution $f(x)\sim N(\mu, \sigma^2)$
+
+We draw random samples of US adults and estimate the parameter $\mu$ and $\sigma^2$.
+
+In short, we build statistical models to interpret the data and infer how these data is being generated.
+
+## Statistics
+
+**Model**
+
+A model is the distributions that generate the data.
+
+$f(x|\theta)$ is called the model.
+
+-   If $f$ is known, then this is a parametric model.
+-   If $f$ is known, then this is a non-parametric model.
+
+## Random Sample
+
+Random samples is a set of random variables $\{X_1, X_2, X_3, ..., X_n\}$ of size $n$ from a population with probability function $f(x)$, from which the random variables are ***identically and independently*** drawn.
+
+Here identically and independently are usually abbreviated as $i.i.d$.
+
+-   Observing one sample $X_i$ does not impact another sample $X_j$.
+-   All samples are drawn from the same population.
+
+$$X_i \overset{\text{i.i.d}}{\sim} X
+$$
+
+## Random Sample Example
+
+1.  Flip a coin
+2.  Rolling a dice
+3.  Drawing US adults samples from US adults population (loosely defined)
+
+Why?
+
+In fact, many of real data observations are approximate of random samples, because it is drawn without replacement. You are less likely to interview a person twice. Thus, it is not independent. We may consider they are independent when the size of the population is large enough, such as the US adult population.
+
+## Probability function of random samples
+
+The joint probability function of observing all of our random samples of size $n$ is the multiplication of all of their marginal probability.
+
+$$P(X_1\cap X_2\cap ...\cap X_i) = \prod_{i=1}^{n} f(x_i|\theta)$$
+
+**Why?**
+
+## Sample mean
+
+Now, we define a function of random samples $X_1, X_2, ..., X_n$ as the average of all random samples of size $n$.
+
+$$\bar{X} = \frac{1}{n}\sum_{i=1}^{n}X_i$$
+
+Given the random variable $X$ has mean $E[X] = \mu$, and variance $Var(X) = \sigma^2$, what is the expected value and the variance of sample mean $\bar{X}$?
+
+## Sample mean
+
+$$
+\begin{align}
+E[\bar{X}] & = E[\frac{1}{n}(X_1+X_2+X_3+...+X_n)] 
+\\
+& = \frac{1}{n}(E[X_1]+E[X_2]+E[X_3]+...+E[X_n])
+\\
+& = \frac{1}{n}(\mu+\mu+\mu+...+\mu)
+\\
+& = \frac{1}{n}n\mu
+\\
+& = \mu
+\end{align}
+$$
+
+## Sample mean
+
+$$
+\begin{align}
+Var(\bar{X}) & = Var(\frac{1}{n}\sum_{i=1}^{n}X_i)
+\\
+& = \frac{1}{n^2}Var(\sum_{i=1}^{n}X_i)
+\\
+& = \frac{1}{n^2}\sum_{i=1}^{n}Var(X_i) \ \ \ \ \ \ \ \ X_i\  \text{are i.i.d}
+\\
+& = \frac{1}{n^2}(n\sigma^2)
+\\
+& = \frac{\sigma^2}{n}
+\end{align}
+$$
+
+## Statistics
+
+In this case, $\bar{X}$ is a function of random samples $X_1, X_2, X_3, ..., X_n$.
+
+We can use some functions of these random samples, such as $\bar{X}$, to infer the random variable $X$, where the random sample are drawn from.
+
+We call these functions as ***Statistics***.
+
+$$Y=T(X_1, X_2, ..., X_n)$$
+
+Here $Y$ is a statistic, $T$ is the function.
+
+$\bar{X}$ is a statistic of $X$.
+
+## Sampling distribution
+
+The probability distribution of statistic $Y$ is called sampling distribution of $Y$.
+
+1.  **A statistic can be any function without involving parameter** $\theta$
+2.  Parameter $\theta$ is for population, while statistics are for random samples.
+
+We may use statistics to infer parameters.
+
+## Statistic Example
+
+We can use $\bar{X}$ to infer $\mu$.
+
+Ex. What is the average height of US adults $\mu$?
+
+Solution: We draw a random sample of US adults $X_1, X_2, ... X_n$, and calculate statistic $\bar{X}$, and use $\bar{X}$ to infer parameter $\mu$.
+
+We call a estimator of a parameter **unbiased estimator** when the expected value of the estimator equal to the parameter.
+
+Here $\bar{X}$ is an unbiased estimator of $\mu$.
+
+## Statistics
+
+In most cases, the parameter $\mu$ of the population can never be known.
+
+Ex.
+
+1.  How do we know if a coin is fair or not?
+2.  How do we know the true average height for US adults?
+
+## Sample variance
+
+The next question is how do we know another parameter variance $\sigma^2$ of a random variable?
+
+Take a guess?
+
+$$Var(X) = E[(X-\mu)^2]$$
+
+The most intuitive way to estimate variance is
+
+$$
+T(X_i) = \frac{1}{n}\sum(X_i-\mu)^2
+$$
+
+## Sample variance
+
+But we can never know $\mu$, we only know $\bar{X}$
+
+How about?
+
+$$
+T(X_i) = \frac{1}{n}\sum(X_i-\bar{X})^2
+$$ This looks intuitively good.
+
+But it is a unaccurate estimator for $\sigma^2$, because it is an biased estimator of $\sigma^2$.
+
+## Sample variance
+
+We define sample variance $S^2$ as
+
+$$
+S^2 = \frac{1}{n-1}\sum(X_i-\bar{X})^2
+$$ Why is this better than our previous guess $\frac{1}{n}\sum(X_i-\bar{X})^2$?
+
+## Sample variance
+
+$$
+\begin{align}
+S^2 &= \frac{1}{n-1}\sum(X_i-\bar{X})^2
+\\
+&= \frac{1}{n-1}\sum(X_i^2-2\bar{X}X_i+\bar{X}^2)
+\\
+&= \frac{1}{n-1}(\sum X_i^2-2\bar{X}\sum X_i+\sum \bar{X}^2)
+\\
+&= \frac{1}{n-1}(\sum X_i^2-2\bar{X}n\bar{X}+n \bar{X}^2)
+\\
+&= \frac{1}{n-1}(\sum X_i^2-n\bar{X}^2)
+\end{align}
+$$
+
+## Sample variance
+
+$$
+\begin{align}
+E[S^2] &= E[\frac{1}{n-1}(\sum X_i^2-n\bar{X}^2)]
+\\
+&= \frac{1}{n-1}E[\sum X_i^2-n\bar{X}^2]
+\\
+&= \frac{1}{n-1}(E[\sum X_i^2]-E[n\bar{X}^2])
+\\
+&= \frac{1}{n-1}(nE[X_i^2]-nE[\bar{X}^2])
+\\
+&= \frac{n}{n-1}(E[X_i^2]-E[\bar{X}^2])
+\end{align}
+$$
+
+## Sample variance
+
+Given
+
+$$
+Var(X) = E[X^2] - E[X]^2
+$$ We have
+
+$$
+E[X^2] = Var(X) + E[X]^2
+$$
+
+Thus
+
+$$
+E[X_i^2] = Var(X_i) + E[X_i]^2 = \sigma^2+\mu^2
+\\
+E[\bar{X}^2] = Var(\bar{X}) + E[\bar{X}]^2 = \frac{\sigma^2}{n}+\mu^2
+$$
+
+## Sample variance
+
+$$
+\begin{align}
+E[S^2] & = \frac{n}{n-1}(E[X_i^2]-E[\bar{X}^2])
+\\
+& = \frac{n}{n-1}(\sigma^2+\mu^2-(\frac{\sigma^2}{n}+\mu^2))
+\\
+& = \frac{n}{n-1}(\sigma^2-\frac{\sigma^2}{n})
+\\
+& = \frac{n}{n-1}\frac{n-1}{n}\sigma^2
+\\
+& = \sigma^2
+\end{align}
+$$
+
+From these derivations, we can learn that the sample variance $S^2=\sum(X_i-\bar{X})^2$ is an unbiased estimator of $\sigma^2$.
+
+## Sample mean and sample variance
+
+In summary, in order to know the random variable (the population), we need to use the statistics to infer its distribution.
+
+We can draw random samples $X_i$, and use the sample mean $\bar{X}$ and sample variance $S^2$ as functions of the random samples to estimate the population parameter $\mu$, $\sigma^2$.
+
+Why we are so interested in the population mean $\mu$, and the population variance $\sigma^2$?
+
+## Sample mean and sample variance
+
+$\bar{X}$ has a sampling distribution with expected value as $\mu$, and a variance as $\frac{\sigma^2}{n}$.
+
+The more sample we have, the better our estimator $\bar{X}$ is, because the variance of $\bar{X}$ decreases as $n$ increases.
+
+## Sampling from Normal distribution
+
+From Central Limit Theorem, for any random variable X, and if the sample size $n$ is large enough, we would expect $\bar{X}\sim N(\mu, \frac{\sigma^2}{n})$.
+
+What about if we do not have a large sample size $n$?
+
+If we have two $i.i.d$ random sample from a normal distributed random variable, the sample mean will still be normally distributed.
+
+This is because any linear combination of normal random variable is also a normal random variable.
+
+## Sampling distribution of $\bar{X}$ and $S^2$
+
+-   The sample mean of random samples from a normal random variable is also a normal random variable.
+
+Thus we would expect
+
+$$
+\bar{X} \sim N(\mu, \frac{\sigma^2}{n})
+$$
+
+-   The sample variable $S^2$ has a expected value of $\sigma^2$, and $\frac{(n-1)S^2}{\sigma^2}$ has a distribution $\chi^x_{n-1}$.
+
+$$
+\frac{(n-1)S^2}{\sigma^2} \sim \chi_{n-1}^2
+$$
+
+-   $\bar{X}$ and $S^2$ are independent.
+
+## $Z$ Statistic
+
+Given that $\bar{X}$ follows a normal distribution.
+
+We can standardize $\bar{X}$ as another statistic $Z$ defined as $\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}$.
+
+$$
+Z = \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \sim N(0,1)
+$$
+
+## Sampling distribution of $\bar{X}$
+
+However, we do not know $\sigma^2$, since it is a population parameter. This statistic $Z$ can not be computed without knowing $\sigma$.
+
+What should we do?
+
+## Sampling distribution of $\bar{X}$
+
+The first intuition is to replace $\sigma$ with $S=\sqrt{S^2}$. This new statistic $\frac{\bar{X}-\mu}{S/\sqrt{n}}$ will not follow $Z$ distribution because $S$ is an estimator of $\sigma$.
+
+What is the distribution of $\frac{\bar{X}-\mu}{S/\sqrt{n}}$?
+
+## $t$ distribution
+
+A $t$ distribution with degree of freedom $\nu$ is defined as follows
+
+$$
+t_{\nu} = \frac{Z}{\sqrt{V/\nu}}
+\\
+V\sim \chi^2_{\nu}
+\\
+Z, V \ \ \text{are independent}
+$$
+
+A $t$ distribution has the following $pdf$
+
+$$
+f(x) = \frac{1}{\sqrt{kx}}\frac{\Gamma(\frac{k+1}{2})}{\Gamma(\frac{k}{2})}(1+\frac{x^2}{k})^{-\frac{k+1}{2}}
+\\
+\Gamma(s)=\int_{0}^{\infty}t^{s-1}e^{-t}dt
+$$
+
+## $t$ distribution
+
+```{r echo=FALSE}
+
+x <- seq(-3, 3, length.out = 1000)
+
+y1 <- dt(x, df=1)
+y2 <- dt(x, df=2)
+y3 <- dt(x, df=3)
+y4 <- dt(x, df=5)
+y5 <- dt(x, df=10)
+y6 <- dt(x, df=100)
+y7 <- dt(x, df=10000)
+
+curve(dt(x, df=1), x, col = "blue", 
+      ylab = "Density", xlab = "t value", 
+      main = "t Distributions with Different Degrees of Freedom",
+      xlim=c(-3,3), ylim=c(0, 0.5))
+curve(dt(x, df=2), x, col = "red", add = TRUE)
+curve(dt(x, df=3), x, col = "green", add = TRUE)
+curve(dt(x, df=5), x, col = "orange", add = TRUE)
+curve(dt(x, df=10), x, col = "pink", add = TRUE)
+curve(dt(x, df=10), x, col = "purple", add = TRUE)
+curve(dt(x, df=10000), x, col = "brown", add = TRUE)
+
+legend("topright", legend = c("df=1", "df=2", "df=3", "df=5", "df=10", "df=100", "df=inf"),
+       col = c("blue", "red", "green", "orange", "pink", "purple", "brown"), lty = 1)
+
+```
+
+## Properties of $t$ distribution
+
+1.  $t$ distribution has one parameter as the degree of freedom $\nu$.
+2.  $t$ distribution is unimodal, symmetric, and centered around 0.
+3.  $t$ distribution is similar to $Z$ distribution but with flatter tails.
+4.  When degree of freedom $\nu$ increases, the tail become less and less flat, until $\nu \rightarrow \infty$, then $t_{\nu} \rightarrow N(0,1)$
+
+## $t$ distribution
+
+It can be shown that the statistic $\frac{\bar{X}-\mu}{S/\sqrt{n}}$ follows a $t$ distribution with degree of freedom $n-1$.
+
+$$
+\frac{\bar{X}-\mu}{S/\sqrt{n}}\sim t_{n-1}
+$$
+
+We call this statistic $\frac{\bar{X}-\mu}{S/\sqrt{n}}$ as the $T$ statistic.
+
+$$
+T = \frac{\bar{X}-\mu}{S/\sqrt{n}}
+$$
+
+## t statistic derivation
+
+$$
+\begin{align}
+\frac{\bar{X}-\mu}{S/\sqrt{N}} & = \frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{(S/\sqrt{n})/(\sigma/\sqrt{n})}
+\\
+& = \frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{S/\sigma}
+\\
+& = \frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{\sqrt{\frac{S^2}{\sigma^2}}}
+\\
+& = \frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{\sqrt{S^2/\sigma^2}}
+\\
+& = \frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{\sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}}}
+\end{align}
+$$
+
+## t statistic derivation
+
+Here
+
+$$
+(\bar{X}-\mu)/(\sigma/\sqrt{n}) \sim Z
+$$
+
+$$
+(n-1)S^2/\sigma^2 \sim \chi_{n-1}^2
+$$ Since
+
+$$
+t_{\nu} = \frac{Z}{\sqrt{V/\nu}}
+\\
+V\sim \chi^2_{\nu}
+$$
+
+Thus
+
+$$
+t = \frac{\bar{X}-\mu}{S/\sqrt{N}} \sim t_{n-1}
+$$
+
+## Summary
+
+In summary, if $X\sim N(\mu, \sigma^2)$
+
+1.  $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
+2.  $\frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \sim Z$
+3.  $\frac{\bar{X}-\mu}{\S/\sqrt{n}} \sim t_{n-1}$
+
+## F distribution
+
+Previously, we have shown that the ratio of the two chi-squared distributed variables has a $F$ distribution. 
+
+$$
+\frac{U_1/p}{U_2/q} \sim F_{p,q}
+\\
+U_1 \sim \chi_p^2
+\\
+U_2 \sim \chi_q^2
+$$
+
+We also know that
+
+$$
+\frac{(n-1)S^2}{\sigma^2} \sim \chi_{n-1}^2
+$$
+
+## F distribution
+
+We can use these two theorems to compare the variances of two populations. 
+
+If we have $X_1, X_2, X_3, ... X_n$ as $n$ random samples drawn from random variable $X\sim N(\mu_x, \sigma^2_x)$, and $Y_1, Y_2, ..., Y_m$ as $m$ random samples drawn from random variable $Y \sim N(\mu_y, \sigma^2_y)$. 
+
+Then the ratio between sample variances $\frac{S^2_x}{S^2_y}$ follows a $F$ distribution, if the two populations have the same variance $\sigma^2_x = \sigma^2_y$. 
+
+## F distribution derivation
+Under the assumption $\sigma^2_x = \sigma^2_y$, we will have $\frac{\sigma^2_x}{\sigma^2_y} = 1$
+
+$$
+\begin{align}
+\frac{S^2_x}{S^2_y} & = \frac{S^2_x}{S^2_y}/\frac{\sigma^2_x}{\sigma^2_y}
+\\
+& = \frac{S^2_x}{\sigma^2_x}/\frac{S^2_y}{\sigma^2_y}
+\\
+& = \frac{(n-1)S^2_x}{(n-1)\sigma^2_x}/\frac{(m-1)S^2_y}{(m-1)\sigma^2_y}
+\end{align}
+$$
+
+## F distribution derivation
+
+Given that 
+
+$$
+U_1=\frac{(n-1)S^2_x}{\sigma^2_x} \sim \chi^2_{n-1}
+\\
+U_2=\frac{(m-1)S^2_y}{\sigma^2_y} \sim \chi^2_{m-1}
+$$
+
+Thus 
+
+$$
+\begin{align}
+\frac{S^2_x}{S^2_y} & = \frac{(n-1)S^2_x}{(n-1)\sigma^2_x}/\frac{(m-1)S^2_y}{(m-1)\sigma^2_y}
+\\
+& = \frac{U_1/(n-1)}{U_2/(m-1)} \sim F_{n-1, m-1}
+\end{align}
+$$
+
+## Hypothesis
+
+What is a hypothesis?
+
+A hypothesis is a statement about population parameter. 
+
+Ex. 
+
+$$
+\mu=0
+\\
+p=0.5
+\\
+\frac{\sigma^2_x}{\sigma^2_y}=1
+$$
+
+## Hypothesis testing
+
+We usually use two complementary hypothesis in a hypothesis testing problem. 
+
+Null Hypothesis $H_0$ and alternative hypothesis $H_1$.\
+
+Then, a hypothesis testing is a rule that specifies:
+
+1. for which sample values, the decision is made to accept $H_0$
+2. for which sample values $H_0$ is rejected and $H_1$ is accepted. 
+
+We call the region of the sample value (statistics) that we will reject $H_0$ as the rejection region, or critical region, and the region we accept the $H_0$ as the acceptance region. 
+
+## Hypothesis testing example
+
+Ex. 
+
+We want to test if a coin is biased towards heads.
+
+Flip coin is a Bernoulli random process with probability of head $P(head) = p$. 
+
+We specify 
+
+$$
+H_0: p \leq 0.5 \ \ \ \ \ \ \text{coin is not biased towards head}
+\\
+H_0: p > 0.5 \ \ \ \ \ \ \text{coin is biased towards head}
+$$
+
+## Hypothesis testing example
+
+$H_0$ and $H_1$ are complementary.
+
+If $H_0: p = 0.5$, then $H_1$ must be $H_1: p \neq0.5$
+
+If $H_0: p \geq 0.5$, then $H_1$ must be $H_1: p < 0.5$
+
+## Hypothesis testing example
+
+Next, we can do experiment and draw random samples from this distribution. 
+
+Suppose we flipped the coin 10 times. And we record the number of heads in the outcomes as $X$. Note $X$ here is a statistic of the random sample $X_1, X_2, X_3, ..., X_{10}$, as $X = \sum_{i=1}^{10}X_i$.
+
+$X$ can take values ranging from 0 to 10. 
+
+If we have observed $X=5$, what should we conclude?
+
+If we have observed $X=6$, what should we conclude?
+
+We need to find a region for $X$, if $X$ fall into that region, then we can make a decision. 
+
+## Hypothesis testing example
+
+What is the sampling distribution of $X$?
+
+## Hypothesis testing example
+
+$X$ follows a binomial distribution 
+
+$$
+X \sim Binomial(10, p)
+\\
+f(x) = {10\choose x} p^x(1-p)^{10-x}
+$$
+
+
+
