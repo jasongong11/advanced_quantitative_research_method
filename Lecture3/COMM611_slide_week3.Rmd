@@ -607,12 +607,16 @@ We will focus on frequentist approach, but will touch on Bayesian methods later.
 We follow the following steps:
 
 1. We assume $H_0$ is true.
-2. We calculate the probability of observing the statistic or more extreme values assuming $H_0$ is true. 
-3. We set up a significance level $\alpha$, in a way such that if this probability $ < \alpha$, we reject $H_0$, other wise, we accept $H_0$. 
-
-1. We assume $H_0$ is true.
 2. We determine the distribution function of the statistic, assuming $H_0$ is true. 
 3. We calculate the rejection region under significance level $\alpha$, in a way such that if the statistic fall into the rejection region, we reject $H_0$. 
+
+
+## Hypothesis testing with frequentist approach
+A equivalent and more conventional method is to calculate the $p$ value. 
+
+1. We assume $H_0$ is true.
+2. We calculate the probability of observing the statistic or more extreme values assuming $H_0$ is true. 
+3. We set up a significance level $\alpha$, in a way such that if this probability $p < \alpha$, we reject $H_0$, other wise, we accept $H_0$. 
 
 ## Hypothesis testing example
 Back to our case:
@@ -694,7 +698,7 @@ $p$ value is defined as the probability of observing the statistic or more extre
 
 $$p=P(X\in \{8,9,10,0,1,2\})=0.10936$$
 
-This is larger than $\alpha$, thus we reject the null hypothesis
+This is larger than $\alpha$, thus we do not reject the null hypothesis
 
 
 ## Hypothesis testing example
