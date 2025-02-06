@@ -548,16 +548,16 @@ We call the region of the sample value (statistics) that we will reject $H_0$ as
 
 Ex. 
 
-We want to test if a coin is biased towards heads.
+We want to test if a coin is biased.
 
 Flip coin is a Bernoulli random process with probability of head $P(head) = p$. 
 
 We specify 
 
 $$
-H_0: p \leq 0.5 \ \ \ \ \ \ \text{coin is not biased towards head}
+H_0: p = 0.5 \ \ \ \ \ \ \text{coin is not biased}
 \\
-H_0: p > 0.5 \ \ \ \ \ \ \text{coin is biased towards head}
+H_0: p \neq 0.5 \ \ \ \ \ \ \text{coin is biased}
 $$
 
 ## Hypothesis testing example
@@ -596,5 +596,195 @@ X \sim Binomial(10, p)
 f(x) = {10\choose x} p^x(1-p)^{10-x}
 $$
 
+## Frequentist approach
+To test the hypothesis, there are at least two schools of thoughts to address the problem. 
+
+The first one is frequentist, and another is Bayesian. 
+
+We will focus on frequentist approach, but will touch on Bayesian methods later. 
+
+## Hypothesis testing with frequentist approach
+We follow the following steps:
+
+1. We assume $H_0$ is true.
+2. We calculate the probability of observing the statistic or more extreme values assuming $H_0$ is true. 
+3. We set up a significance level $\alpha$, in a way such that if this probability $ < \alpha$, we reject $H_0$, other wise, we accept $H_0$. 
+
+1. We assume $H_0$ is true.
+2. We determine the distribution function of the statistic, assuming $H_0$ is true. 
+3. We calculate the rejection region under significance level $\alpha$, in a way such that if the statistic fall into the rejection region, we reject $H_0$. 
+
+## Hypothesis testing example
+Back to our case:
+
+We assume $H_0: p = 0.5$ is true. Thus, we have the distribution of X.
+
+## Hypothesis testing example
+
+```{r}
+x <- 0:10
+
+prob <- dbinom(x,10,0.5)
+
+plot(x, prob,
+     type='h',
+     xlab = "Number of success of tossing a fair coin twice",
+        ylab = "Probability",
+     main="Binomial distribution",
+        ylim=c(0, 0.3))
+```
+
+## Hypothesis testing example
+
+We can calculate the probability 
+
+$P(X=0|p=0.5)=0.00098$, $P(X=1|p=0.5)=0.0098$, $P(X=2|p=0.5)=0.0439$, $P(X=3|p=0.5)=0.1172$, $P(X=4|p=0.5)=0.2051$, $P(X=5|p=0.5)=0.2461$, $P(X=6|p=0.5)=0.2051$, $P(X=7|p=0.5)=0.1172$, $P(X=8|p=0.5)=0.0439$, $P(X=9|p=0.5)=0.0098$, $P(X=10|p=0.5)=0.00098$
+
+
+## Hypothesis testing example
+
+Next, we calculate the rejection region for statistic $X$, in a way such that the probability that the observed statistic fall into this region will be less than the significance level $\alpha$. 
+
+In this example, we start with $X=10$ and $X=0$, these values are the most extreme values in the possible outcomes. $P(X=10) + P(X=0) = 0.00196$. It means that the probability of observing a statistic belong to the region $X\in{0, 10}$ is 0.002, which is smaller than $\alpha$. 
+
+## Hypothesis testing example
+
+We then expand our rejection region to include $X=9$ and $X=1$, $P(X\in \{0,1,9,10\}) = 0.02156$, which is still less than $\alpha$.
+
+Next, we calculate $P(X\in \{0,1,2, 8, 9,10\}) = 0.10936$, which is larger than significance level $\alpha$. 
+
+Thus, our rejection region is $\{0,1, 9, 10\}$, because the probability that we observe statistic fall into this region is smaller than significance level $\alpha$. 
+
+## Hypothesis testing example
+
+```{r}
+x <- 0:10
+
+prob <- dbinom(x,10,0.5)
+
+plot(x, prob,
+     type='h',
+     xlab = "Number of success of tossing a fair coin twice",
+        ylab = "Probability",
+     main="Binomial distribution",
+        ylim=c(0, 0.3))
+
+lines(c(0, 0), c(0, dbinom(0,10,0.5)), type='l', col="red")
+lines(c(1, 1), c(0, dbinom(1,10,0.5)), type='l', col="red")
+lines(c(9, 9), c(0, dbinom(9,10,0.5)), type='l', col="red")
+lines(c(10, 10), c(0, dbinom(10,10,0.5)), type='l', col="red")
+rect(xleft = -0.2, xright = 1.2, ybottom = -0.01, ytop = 0.03, border="red")
+rect(xleft = 8.8, xright = 10.2, ybottom = -0.01, ytop = 0.03, border="red")
+text(x=8.5, y=0.2, "P(X in region) <= 0.05")
+```
+
+## Hypothesis testing example
+
+Suppose we observed $X=8$, what should we conclude?
+
+Since $X \notin \{Rejection\}$, we do not reject $H_0$, and conclude that the coin is not biased. 
+
+If we observe $X=9 \in \{Rejection\}$, we reject $H_0$, and conclude that the coin is biased.
+
+## Hypothesis testing example
+
+We can also calculate the $p$ value $X=8$.
+
+$p$ value is defined as the probability of observing the statistic or more extreme values given $H_0$ is true.
+
+$$p=P(X\in \{8,9,10,0,1,2\})=0.10936$$
+
+This is larger than $\alpha$, thus we reject the null hypothesis
+
+
+## Hypothesis testing example
+
+In statistical programming, we do not need to do it by hand. The software can do it automatically. 
+
+```{r echo=TRUE}
+binom.test(x=8, n=10, p=0.5, alternative="two.sided", conf.level=0.05)
+```
+
+
+## Two-tailed vs. one-tailed
+
+As you may have noticed, when we determine the rejection region and $p$ value, we are not only consider extreme values on left or right side, but consider both sides. 
+
+The reason for this is because our $H_0$ is two-sided. 
+
+$$
+H_0: p = 0.5 \ \ \ \ \ \ \text{coin is not biased}
+\\
+H_0: p \neq 0.5 \ \ \ \ \ \ \text{coin is biased}
+$$
+
+Thus, the extreme value statistic against $H_0$ must include both large and small statistic on both sides of the distribution. 
+
+## Two-tailed vs. one-tailed
+
+What if we want to know if the coin is biased towards heads. 
+
+$$
+H_0: p \le 0.5 \ \ \ \ \ \ \text{coin is not biased towards head}
+\\
+H_0: p > 0.5 \ \ \ \ \ \ \text{coin is biased towards head}
+$$
+
+Now, it becomes a one-tailed test, where the extreme values only include large values not small values. Thus, we need to adjust the rejection region and $p$ values accordingly.
+
+## Two-tailed vs. one-tailed
+
+$$
+P(X\in \{9,10\})=0.01078
+\\
+P(X\in \{8,9,10\})=0.05468
+$$
+
+Thus, in this case, our rejection region is $\{9, 10\}$. 
+
+If $X < 9$, then we do not reject $H_0$ and conclude that the coin is not biased towards heads.
+Other wise, we reject $H_0$, and conclude that the coin is biased towards heads.
+
+## Two-tailed vs. one-tailed
+
+```{r}
+x <- 0:10
+
+prob <- dbinom(x,10,0.5)
+
+plot(x, prob,
+     type='h',
+     xlab = "Number of success of tossing a fair coin twice",
+        ylab = "Probability",
+     main="Binomial distribution",
+        ylim=c(0, 0.3))
+
+lines(c(9, 9), c(0, dbinom(9,10,0.5)), type='l', col="red")
+lines(c(10, 10), c(0, dbinom(10,10,0.5)), type='l', col="red")
+rect(xleft = 8.8, xright = 10.2, ybottom = -0.01, ytop = 0.03, border="red")
+text(x=8.5, y=0.2, "P(Right tail) <= 0.05")
+```
+
+## Two-tailed vs. one-tailed
+
+We can also calculate the $p$ value for one-tailed test. 
+
+Suppose we have observed statistic $X=8$
+$p=P(X\ge8 \ | \ p_{\theta}=0.5) = 0.05468$
+
+## Two-tailed vs. one-tailed
+
+```{r echo=TRUE}
+binom.test(x=8, n=10, p=0.5, alternative="greater", conf.level=0.05)
+```
+
+## Two-tailed vs. one-tailed
+Thus, if the sampling distribution for the statistic is symmetric (luckily, it is the case for most of our hypothesis testing problems).
+
+$$
+p_{one-tailed} = p_{two-tailed}/2
+$$
+
+And the hypothesis testing for two-tailed test with significance level $\alpha$ is equivalent to the one-tailed test with significance level $2\alpha$. Two-tailed test is more conservative.
 
 
