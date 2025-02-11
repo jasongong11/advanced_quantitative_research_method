@@ -791,4 +791,655 @@ $$
 
 And the hypothesis testing for two-tailed test with significance level $\alpha$ is equivalent to the one-tailed test with significance level $2\alpha$. Two-tailed test is more conservative.
 
+## Z test
+Suppose we want to test the US adults height $X \sim N(\mu, \sigma^2)$, with $\sigma^2 = 20$ with $\mu$ unknown. 
 
+We want to test if Jason's height (172 cm) is taller or shorter than the average US height. We need to specify $H_0, H_1$
+
+$$
+H_0: \mu \le172
+\\
+H_1: \mu > 172
+$$
+
+## Z test
+
+We collect $n$ random samples $X_1, X_2, X_3, ... X_n$ with $n=20$, and $\sigma^2 = 20$ known. The random samples $X_i$ follows the sample distributions as $X$, $X_i \overset{\text{i.i.d}}{\sim} X$. Thus, the sample mean follows the $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$.
+
+By standardization, we know that 
+
+$$
+\frac{\bar{X}-\mu}{\frac{\sigma^2}{n}} \sim Z
+\\
+\sigma^2 = 20
+$$
+
+
+## Z test
+
+Given that this is a one-tailed test. 
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_range <- x[x>=1.644854]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "x", ylab = "Probability Density",
+     main="Z distribution")
+axis(1, at = -2:4, labels = c("-2", "-1", "0", "1", "2", "3", "4"))
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+text(x=2, y=0.3, labels="P(Z>=z*) = 0.05", cex=1.5)
+
+```
+
+
+## Z test
+
+Thus if $\frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} > z^*$, where $P(Z\ge z^*) =0.05$, we will have $p < 0.05$. 
+
+Here 
+
+$$p = P(Z \ge \frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} | \mu=172, \sigma^2=20, n=20)$$
+
+## Z test rejection region
+
+To compute the rejection region for $\bar{X}$, we need to find out $z^*$ where $P(Z\ge z^*) =0.05$. 
+
+We can simply consult the Z tables or softwares. 
+
+```{r echo=TRUE}
+qnorm(0.95, mean=0, sd=1)
+```
+
+```{r echo=TRUE}
+pnorm(1.644854, mean=0, sd=1)
+```
+
+## Z test rejection region
+
+The rejection region needs to satify $\frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} > z^*$, where $z^*=1.645$.
+
+Equivalently, $\bar{X}$ needs to satify $\bar{X} > \mu + z^*\sqrt{\sigma^2/n} $.
+
+Thus the rejection region for $\bar{X}$ is $(\mu + z^*\sqrt{\sigma^2/n}, \infty)$.
+
+Here 
+
+$$
+\mu + z^*\sqrt{\sigma^2/n}  = 172 + 1.645 * \sqrt{20/20}  = 173.645
+$$
+
+## Z test rejection region
+
+In conclusion, we have calculated that the rejection region for $\bar{X}$ is $(173.645, \infty)$. 
+
+If $\bar{X}$ is larger than 173.645, we reject the null hypothesis $H_0$, and accept $H_1$. 
+
+Otherwise, we do not reject $H_0$, and accept $H_0$. 
+
+If we have observed $\bar{X} = 175$, what should we conclude? 
+
+## Z test p value
+
+Another conventional method is to calculate the $p$ value. Here $p=P(Z\ge \frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}}|\mu,\sigma^2, n)$.
+
+We compute 
+
+$$
+\frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} = \frac{175-172}{\sqrt{20/20}} = 3
+$$
+
+## Z test p value
+
+Thus $p=P(Z\ge 3)=1-P(Z<3)$, which can be found by 
+
+```{r echo=TRUE}
+1-pnorm(3, mean=0, sd=1)
+```
+
+Here we calculated $p=0.001 < 0.05$, thus we reject $H_0$ and accept $H_1$.
+
+## Two-tailed Z test
+
+Now, what if we want to conduct the two-tailed hypothesis testing?
+
+We want to know if Jason's height (172 cm) is the US adult average height.
+
+$$
+H_0: \mu=172
+\\
+H_1: \mu\neq172
+$$
+
+What is our rejection region and $p$ value if observed $\bar{X} = 175$?
+
+## Confidence interval method
+
+Previously, we have discussed we can use the sample mean $\bar{X}$ as an estimator of $\mu$.
+
+$$
+\bar{X} = \hat{\mu}
+$$
+
+In this case, $\bar{X}$ is said as a point estimator of $\mu$, since it gives a singular value for $\mu$.
+
+Another method to estimate $\mu$ is interval estimator, where we find a region $(L, U)$ that contains $\mu$ with a confidence interval $\gamma = 1-\alpha$. Usually, we set $\alpha=0.05$, and have $\gamma=95\%$.
+
+## Confidence interval method
+
+With this interval estimator $(L, U)$, we can say that we are $95\%$ confident that the parameter $\mu$ is contained in the interval estimator $(L, U)$. 
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_range <- x[(x<=qnorm(0.975, mean=0, sd=1)) & (x>=qnorm(0.025, mean=0, sd=1))]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "mu", ylab = "Probability Density",
+     main="Distribution for mu")
+axis(1, at = -3:3, labels = c("", "", "", "", "", "", ""))
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+text(x=0, y=0.05, labels="P(L<=mu<=U) = 0.95", cex=1.5)
+
+```
+
+## Confidence interval for $\mu$
+
+How do we calculate this confidence interval $(L, U)$?
+
+We know that 
+
+$$
+\frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} \sim Z
+\\
+P(z^*_- \le \frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} \le z^*_+) = 0.95
+\\
+P(Z\le z^*_+) = 1-\frac{\alpha}{2} =0.975
+\\
+P(Z\le z^*_-) = \frac{\alpha}{2} =0.025
+$$
+
+
+## Confidence interval for $\mu$
+
+Equivalently, we have 
+
+$$
+P(\bar{X} + z^*_- \sqrt{\frac{\sigma^2}{n}} \le \mu \le \bar{X} + z^*_+ \sqrt{\frac{\sigma^2}{n}}) = 0.95
+\\
+z^*_+ = 1.96
+\\
+z^*_- = -1.96
+$$
+
+## Confidence interval for $\mu$
+
+Thus the confidence interval with confidence level $\gamma = 1-\alpha=95\%$ is 
+
+$(\bar{X} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{X} + 1.96 \sqrt{\frac{\sigma^2}{n}})$.
+
+We plug in $\bar{X} = 175, \sigma^2=20, n=20$, we can calculate the confidence interval is $(173.04, 176.96)$.
+
+This shows that we are $95\%$ confidence that the parameter $\mu$ is contained in the interval $(173.04, 176.96)$.
+
+## Hypothesis testing with confidence interval
+
+Importantly, the confidence interval is a two-tailed test as the confidence interval considers both sides of the distribution. 
+
+Thus if we want to conduct a one-tailed test, we need to adjust the confidence level to $1-2\alpha=90\%$, and adjust the confidence interval accordingly. 
+
+$$
+\gamma=90\%
+\\
+z^*_+ = 1.64
+\\
+z^*_- = -1.64
+$$
+
+Thus, the confidence interval with $\gamma=90\%$ is (173.36,176.64).
+
+## Hypothesis testing with confidence interval
+
+Hypothesis testing with confidence interval is conducted to test if the confidence interval contains the null parameter set from the null hypothesis $\mu_0$. 
+
+If the confidence interval $(L, U)$ contains $\mu_0$, then we do not reject $H_0$, otherwise we reject $H_0$, and accept $H_1$.
+
+## Hypothesis testing with confidence interval
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_range <- x[(x<=qnorm(0.95, mean=0, sd=1)) & (x>=qnorm(0.05, mean=0, sd=1))]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "mu", ylab = "Probability Density",
+     main="One-tailed test")
+axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+text(x=0, y=0.05, labels="P(L<=mu<=U) = 0.9", cex=1.5)
+abline(v=-3, col="red")
+text(x=-2.5, y=0.1, labels="mu_null", cex=1.25)
+```
+
+
+
+## Hypothesis testing with confidence interval
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_range <- x[(x<=qnorm(0.975, mean=0, sd=1)) & (x>=qnorm(0.025, mean=0, sd=1))]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "mu", ylab = "Probability Density",
+     main="Two-tailed test")
+axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+text(x=0, y=0.05, labels="P(L<=mu<=U) = 0.95", cex=1.5)
+abline(v=-3, col="red")
+text(x=-2.5, y=0.1, labels="mu_null", cex=1.25)
+```
+
+## T test
+In the above example, we assume $\sigma^2$ is known. However, $\sigma^2$ is not known in most real-world data cases, and we need to use sample variance $S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2$ to estimate $\sigma^2$. 
+
+In this case, when $\sigma^2$ is known, and $\hat{\sigma^2} = S^2$, we will have a $t$ distribution.
+
+$$
+\frac{\bar{X}-\mu}{\sqrt{S^2/n}} \sim t_{n-1}
+$$
+
+## T test
+
+Similar to Z test, we need to find the rejection region or $p$ value to test our hypothesis with significance level $\alpha$. 
+
+Note that since when $n$ is extremely large, $t$ distribution will approximate a Z distribution. Thus, when $n$ is large, $t$ test will be equivalent to $Z$ test with $\sigma^2 \approx S^2$. 
+
+How large is extremely large? Usually we consider when $n \ge 1000$ is extremely large, where you can not tell the difference. 
+
+## T test for population mean
+
+A professor believes that the students would study on average 10 hours per week for his course. To test his hypothesis, he sent out a survey to 10 randomly sampled students in his class asking how many hours per week they study on his course. The collected samples are
+
+$$
+11, 10, 14, 15, 5, 8, 9, 12, 6, 8
+$$
+
+Is the professor correct or not? 
+
+## Example
+
+To test this hypothesis with $p$ value, we need to follow the following steps:
+
+1. State the null hypothesis and alternative hypothesis.
+2. Calculate the $t$ statistic, and find the $t_{n-1}$ distribution.
+3. Calculate the $p$ values based on the $t$ statistic and $t_{n-1}$ distribution.
+4. Compare the $p$ value with significance level $\alpha$.
+5. Reject null hypothesis if $p < \alpha$, otherwise accept null hypothesis. 
+
+
+## State null hypothesis and alternative hypothesis
+
+$$
+H_0: \mu=10
+\\
+H_1: \mu \ne 10
+$$
+
+## Calculate $t$ statistic
+
+$$
+\bar{X} = \frac{1}{n}\sum{X_i} \ \ \ \ \ \ \ \bar{X} = 9.8
+\\
+S^2 = \frac{1}{n-1}\sum{(X_i-\bar{X})^2} \ \ \ \ \ \ S^2 = 10.622
+\\
+t = \frac{\bar{X} - \mu}{\sqrt{S^2/n}} \sim t_{n-1} \ \ \ \ \ \ t = -0.194
+$$
+
+## Calculate $p$ value
+
+$$
+p = P((t>t_+)\cup(t<t_-)|\mu=10) 
+$$
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dt(x, df=10)
+x_range_1 <- x[(x<=-0.194)]
+x_range_2 <- x[(x>=0.194)]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "t", ylab = "Probability Density",
+     main="Two-tailed t test")
+axis(1, at = -3:3, labels = c("-3", "-2", "-1", "0", "1", "2", "3"))
+
+polygon(c(x_range_1[1], x_range_1, x_range_1[length(x_range_1)]), 
+        c(0, dt(x_range_1, df=10), 0), 
+        col = "pink") 
+
+polygon(c(x_range_2[1], x_range_2, x_range_2[length(x_range_2)]), 
+        c(0, dt(x_range_2, df=10), 0), 
+        col = "pink") 
+
+```
+
+## Calculate $p$ value
+
+```{r echo=TRUE}
+pt(-0.194, df=9)*2 
+```
+
+Since $p = 0.850 > \alpha$, since we do not reject $H_0$, and conclude that the average student studying time for this course is 10 hours. 
+
+## t.test with R code
+
+```{r echo=TRUE}
+study_time_samples <- c(11, 10, 14, 15, 5, 8, 9, 12, 6, 8)
+t.test(study_time_samples, alternative="two.sided", mu=10)
+```
+
+## t test for mean comparison
+
+In the previous example, we test the population mean for a single population $\mu = \mu_0$.
+
+Sometimes, we have two populations or even more populations, and want to test if the mean for different populations are the same. 
+
+## t test for mean comparison
+
+Ex. 
+
+- People's attitude of taking vaccine before and after viewing a promotional message. 
+- The height different between males and females. 
+- People's life expectancy time in experimental group (taking medicine) and control group (taking placebo). 
+
+In general, t test mean comparison can be categorized into paired-sample and independent-sample mean comparison. 
+
+## Paired-sample mean comparison
+
+Paired-sample mean comparison can be conducted when the two group of random samples can be paired one to one. 
+
+Suppose we have collected two observations from each individual in a group of random samples of size $n$. 
+
+$$
+X_1, X_2, X_3, ..., X_n
+\\
+Y_1, Y_2, Y_3, ..., Y_n
+$$
+
+We want to test the compare the mean difference between the two observations $X$ and $Y$ for $\mu_x$ and $\mu_y$. 
+
+## Paired-sample mean comparison
+
+We state the null hypothesis and alternative hypothesis
+
+$$
+H_0: \mu_x = \mu_y
+\\
+H_1: \mu_x \ne \mu_y
+$$
+
+## Paired-sample mean comparison
+
+Since these two population are paired, we can calculate the difference between pairs of samples $\delta_i$.
+
+Thus, we have a random sample of population differences $\delta_i$.
+
+$$
+\delta_i = X_i - Y_i
+$$
+And then we can conduct a one sample t test on $\delta_i$ with $\mu_{\delta} = 0$, since the null hypothesis state $\mu_x - \mu_y = 0$.
+
+## Paired-sample mean example
+
+Suppose we are interested in the effectiveness of a promotional message for promoting vaccines. 
+
+<img src='img/vaccine_message.jpeg' width="40%">
+
+## Paired-sample mean example
+
+We randomly sampled 10 adults in our study, and measured their behavioral intention to take flu vaccine before viewing the message, where 1 encodes do not want to take vaccine at all, and 10 encodes want to take vaccine immediately.
+
+$$
+X_i = [2,3,5,4,2,1,5,7,3,5]
+$$
+
+We also measured their attitude after viewing the message for the same group of participants.
+
+$$
+Y_i = [3,4,5,6,2,9,9,6,4,6]
+$$
+
+## Paired-sample mean example
+
+We want to know if the message is effective in promoting people's intention to take the vaccine.
+
+What should we do?
+
+
+## Paired-sample mean example
+
+- Calculate paired-sample mean difference $\delta_i$
+- State the null hypothesis and alternative hypothesis
+- Calculate the sample mean $\bar{\delta}$ and sample variance $S^2_{\delta}$ for the mean differences $\delta_i$
+- Calculate the $t$ statistic and determine its sampling distribution $t_{n-1}$
+- Calculate the $p$ value and compare it with significance level $\alpha$
+- Reject $H_0$ or not, and make conclusion
+
+
+## Paired-sample mean example
+
+We have 
+
+$$
+H0: \mu_{\delta} = 0
+\\
+H1: \mu_{\delta} \ne 0
+\\
+t = \frac{\bar{\delta}-\mu_{\delta}}{\sqrt{\sigma_{\delta}^2/n}} \sim t_{n-1}
+\\
+p = P((t>t_+)\cup(t<t_-))
+$$
+
+## Paired-sample mean with r code
+
+```{r echo=TRUE}
+intention_before <- c(2,3,5,4,2,1,5,7,3,5)
+intention_after <- c(3,4,5,6,2,9,9,6,4,6)
+t.test(intention_after, intention_before, alternative="two.sided",
+       mu=0, paired=TRUE)
+```
+
+## Paired-sample mean with r code
+
+```{r echo=TRUE}
+t.test(intention_after-intention_before, alternative="two.sided",
+       mu=0)
+```
+
+## Independent sample mean comparison
+
+In some other cases, we do not have data that comes from same group of samples. 
+
+When we want to test the mean difference between two groups of populations that are independently drawn, we need to use the independent sample mean comparison. 
+
+## Example
+
+Suppose we want to test the effectiveness differences between two types of promotional messages.
+
+<img src='img/happy_appeal.jpg' width="40%">              <img src='img/fear_appeal.jpg' width="40%">
+
+## Example
+
+The study design is that we random sampled a group of people, and randomly separate them into two groups. 
+
+We give the first group the first message and measured their behavioral intention $X_i = [5,7,9,6,10]$. 
+
+Then give the second group the second message and measured their behavioral intention $Y_i = [2,3,5,7]$. 
+
+## Independent sample mean comparison
+
+We have two groups of random samples, one group of sample $X_i$ with sample size $n$ , and another group of sample $Y_i$ with sample size $m$. 
+
+We can calculate the sample mean and sample variance for both groups independently $\bar{X}, S^2_x, \bar{Y}, S^2_y$. 
+
+And we have our null hypothesis and alternative hypothesis. 
+
+$$
+H_0: \mu_x - \mu_y = 0
+\\
+H_1: \mu_x - \mu_y \ne 0
+$$
+
+## Independent sample mean comparison
+
+When we assume the variance of the two population are the same $\sigma^2_x=\sigma^2_y$
+
+We construct our $t$ statistic which follows a $t$ distribution with degree of freedom $n+m-2$
+
+The idea is to estimate the sample variance with both samples as the pooled sample variance $S_p^2$. 
+
+$$
+t = \frac{\bar{X} - \bar{Y}}{\sqrt{S^2_p(\frac{1}{n}+\frac{1}{m})}} \sim t_{n+m-2}
+\\
+S_p^2 = \frac{\sum_{i=1}^n(X_i-\bar{X})^2 +\sum_{i=1}^m(Y_i-\bar{Y})^2}{m+n-2}
+$$
+
+
+## Independent-sample mean comparison example
+
+$$
+\bar{X} = \frac{1}{n}\sum X_i = 7.4
+\\
+\bar{Y} = \frac{1}{m}\sum Y_i = 4.25
+\\
+S_p^2 = \frac{\sum_{i=1}^n(X_i-\bar{X})^2 +\sum_{i=1}^m(Y_i-\bar{Y})^2}{m+n-2} = 4.564
+\\
+t = \frac{\bar{X} - \bar{Y}}{\sqrt{S^2_p(\frac{1}{n}+\frac{1}{m})}} = 2.198 \sim t_{n+m-2} = t_7
+\\
+p = P(t > t_+|\mu_{\delta=0}) + P(t < t_-|\mu_{\delta=0}) = 0.064
+$$
+
+
+## Independent-sample mean comparison with R
+```{r echo=TRUE}
+intention_group_happy <- c(5,7,9,6,10)
+intention_group_fear <- c(2,3,5,7)
+t.test(intention_group_happy, intention_group_fear, alternative="two.sided",
+       mu=0, paired=FALSE, var.equal=TRUE)
+```
+
+## Independent sample without equal variance
+In the case above, we assumed $\sigma^2_x=\sigma_y^2$, which is a pretty strong assumption to make especially when we have small sample sizes. 
+
+When we do not assume $\sigma^2_x=\sigma_y^2$, the calculation will be a bit more complex. 
+
+But the logic is the same, we need to construct hypothesis, find out $t$ statistic, find its $t$ distribution, and then calculate $p$ value. 
+
+## Independent sample without equal variance
+
+Here is how we construct our $t$ statistic.
+
+$$
+t = \frac{\bar{X}-\bar{Y}}{\sqrt{\frac{S^2_x}{n}+\frac{S^2_y}{m}}} \sim t_k
+$$
+
+Then the degree of freedom for the $t$ distribution $k$ is given
+
+$$
+k = \frac{(\frac{S^2_x}{n} + \frac{S^2_y}{m})^2}{\frac{1}{n-1}\frac{S^2_x}{n} + \frac{1}{m-1}\frac{S^2_y}{m}}
+$$
+
+
+## Independent-sample mean comparison with R
+
+```{r echo=TRUE}
+intention_group_happy <- c(5,7,9,6,10)
+intention_group_fear <- c(2,3,5,7)
+t.test(intention_group_happy, intention_group_fear, alternative="two.sided",
+       mu=0, paired=FALSE, var.equal=FALSE)
+```
+
+
+## F test
+
+F test is used to compare the variance of two **independent** variables. 
+
+Recall that for two independent random variables $X$ and $Y$. 
+
+If we collect $n$ samples $X_i$ from $X$, and $m$ samples of $Y_i$ from $Y$.
+
+We would have 
+
+$$
+\frac{S^2_x/\sigma^2_x}{S^2_y/\sigma^2_y} \sim F_{n-1, m-1}
+$$
+
+## F test
+
+In a F test, we set up the hypothesis
+
+$$
+H_0: \sigma_x^2 = \sigma_y^2
+\\
+H1: \sigma_x^2 \ne \sigma_y^2
+$$
+
+## F test
+
+Thus under $H_0$, we will have 
+
+$$
+\sigma^2_x/\sigma_y^2 = 1
+\\
+\frac{S^2_x}{S^2_y} \sim F_{n-1, m-1}
+$$
+
+## F test
+
+Thus, we can calculate the $F$ statistic and $p$ value, and test the hypothesis with $\alpha=0.05$ and $F_{n-1, m-1}$ distribution. 
+
+$$
+F' = \frac{S^2_x}{S^2_y} \sim F_{n-1, m-1}
+\\
+p = P(F>F')
+$$
+
+And if $p < \alpha$, we reject $H_0$, and accept $H_1$.
+
+## F test
+
+We may also calculate the $F$ statistic and then compare it with the critical value for the $F$ distribution $F^*$ 
+$$
+P(F>F^*) = \alpha=0.05
+\\
+F \sim F_{n-1, m-1}
+$$
+Then we compare the $F$ statistic with the critical value $F^*$.
+
+if $F > F^*$, we reject $H_0$, otherwise, we accept $H_0$.
+
+## F test
+
+```{r}
+x <- seq(0, 5, length=100)
+y <- df(x, df1=10, df2=10)
+x_range <- x[(x>=qf(0.95, 10, 10))]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "t", ylab = "Probability Density",
+     main="F test")
+axis(1, at = 0:5, labels = c("0", "1", "2", "3", "4", "5"))
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, df(x_range, 10, 10), 0), 
+        col = "pink") 
+text(x=3, y=0.2, labels="P(F>F*)=0.05", cex=1.25)
+```
