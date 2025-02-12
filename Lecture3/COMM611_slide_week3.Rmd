@@ -1443,3 +1443,390 @@ polygon(c(x_range[1], x_range, x_range[length(x_range)]),
         col = "pink") 
 text(x=3, y=0.2, labels="P(F>F*)=0.05", cex=1.25)
 ```
+
+## Power analysis
+
+Let's take another look at the significance level $\alpha$.
+
+$$
+\alpha = P(T\in \{\text{Rejection region\}}|\theta=\theta_0)
+$$
+It is the probability of the statistic $T$ fall into the rejection region, while assuming null hypothesis is true $\theta=\theta_0$.
+
+## Power analysis
+
+It is suggesting that even if the observed statistic fall into the rejection region, there is still $\alpha$ probability that our null hypothesis is true. 
+
+With $\alpha$ become larger or smaller, our tolerance for this type of error changes. 
+
+This type of error is called **Type I error**.
+
+## Type I error
+
+Type I error occurs when we observe the statistic in rejection region thus falsely reject the null hypothesis, while the null hypothesis is true.
+
+There could also be another type of error called **Type II error**, that is we falsely accept the null while the null is false. 
+
+## Hypothesis testing error
+
++-------------------------+-------------+--------------+
+|                Decision | Accept H0   | Rejection H0 | 
+| Truth                   |             |              | 
++=========================+=============+==============+
+| H0 is true              | Correct     | Type I error | 
++-------------------------+-------------+--------------+
+| H1 is true              |Type II error| Correct      | 
++-------------------------+-------------+--------------+
+
+- The probability of Type I error is $\alpha$ called significance level.
+
+- The probability of type II error is called $\beta$, and $1-\beta$ is called power.
+
+## Hypothesis testing error
+
+Power means our power of correctly reject $H_0$, while $H_1$ is true.
+
+$$
+1- \beta = P(T\in \{\text{Rejection region\}}|\theta=\theta_1)
+$$
+In most cases, we want type I error ($\alpha$) the smaller the better and power $1-\beta$ the larger the better. 
+
+But there is a trade-off between $\alpha$ and power. 
+
+## Trade off between power and $\alpha$
+
+Suppose we have 
+
+$$
+H_0: \mu \le 175
+\\
+H_1 : \mu > 175
+$$
+Suppose we have $\sigma^2=10$ and sample size $n=10$. 
+
+Thus by calculation, we have a rejection region for $\bar{X}$ to be $(176.64, \infty)$ with a $Z$ test.
+
+## Trade off between power and $\alpha$
+Then we would have a hypothesis testing based on $H_0$.
+
+$$
+P(\bar{X}>176.64) = \alpha
+$$
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_range <- x[(x>=qnorm(0.95, mean=0, sd=1))]
+
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "mu", ylab = "Probability Density",
+     main="Two-tailed test")
+axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+text(x=2, y=0.02, labels="α", cex=1.3, col="red")
+text(x=0, y=0.38, labels="H0", cex=1.3, col="black")
+abline(v=1.65, col="red")
+abline(v=0, col="black", lty=2)
+```
+
+
+## Trade off between power and $\alpha$
+Suppose we have
+
+We assume $H1: \mu_{true} = 176$ is true. 
+
+Based on this assumed true, we can calculate our power $1-\beta$ and Type II error probability $\beta$.
+
+$$
+\begin{align}
+1-\beta &= P(\bar{X} > 176.64 | \mu=176)\\
+&= P(\frac{\bar{X}-\mu}{\sqrt{\sigma^2/n}} > \frac{176.64-\mu}{\sqrt{\sigma^2/n}}|\mu=176)
+\\
+&= P(Z > 0.64) = 0.739
+\end{align}
+$$
+
+## Trade off between power and $\alpha$
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_true <- x+1
+x_range <- x[(x>=qnorm(0.95, mean=0, sd=1))]
+x_range_beta <- x[(x<=qnorm(0.95, mean=0, sd=1))]
+  
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "mu", ylab = "Probability Density",
+     main="One-tailed test alpha=0.05")
+lines(x_true, y, type = "l", lwd = 2)
+
+axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+polygon(c(x_range_beta[1], x_range_beta, x_range_beta[length(x_range_beta)]), 
+        c(0, dnorm(x_range_beta, mean=1, sd=1), 0), 
+        col = rgb(0, 255, 0, max = 255, alpha = 125)) 
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=1), 0), 
+        col = rgb(0, 0, 255, max = 255, alpha = 125, names = "blue50")) 
+
+text(x=2, y=0.02, labels="α", cex=1.3, col="red")
+text(x=0.5, y=0.02, labels="β", cex=1.3, col="black")
+text(x=2, y=0.15, labels="Power", cex=1.3, col="black")
+text(x=0, y=0.38, labels="H0", cex=1.3, col="black")
+text(x=1, y=0.38, labels="H1", cex=1.3, col="black")
+abline(v=1.65, col="red")
+abline(v=0, col="black", lty=2)
+abline(v=1, col="black", lty=2)
+```
+
+
+## Trade off between power and $\alpha$
+
+What will happen if we set $\alpha$ to be smaller?
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_true <- x+1
+x_range <- x[(x>=qnorm(0.99, mean=0, sd=1))]
+x_range_beta <- x[(x<=qnorm(0.99, mean=0, sd=1))]
+  
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "mu", ylab = "Probability Density",
+     main="One-tailed test alpha=0.01")
+lines(x_true, y, type = "l", lwd = 2)
+
+axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+polygon(c(x_range_beta[1], x_range_beta, x_range_beta[length(x_range_beta)]), 
+        c(0, dnorm(x_range_beta, mean=1, sd=1), 0), 
+        col = rgb(0, 255, 0, max = 255, alpha = 125)) 
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=1), 0), 
+        col = rgb(0, 0, 255, max = 255, alpha = 125, names = "blue50")) 
+
+text(x=2.5, y=0.02, labels="α", cex=1.3, col="red")
+text(x=0.5, y=0.02, labels="β", cex=1.3, col="black")
+text(x=2.5, y=0.2, labels="Power", cex=1.3, col="black")
+text(x=0, y=0.38, labels="H0", cex=1.3, col="black")
+text(x=1, y=0.38, labels="H1", cex=1.3, col="black")
+abline(v=qnorm(0.99, mean=0, sd=1), col="red")
+abline(v=0, col="black", lty=2)
+abline(v=1, col="black", lty=2)
+```
+
+
+## Improve power
+
+When we set $\alpha$ to be smaller, our power also decreases, since the rejection region becomes smaller given smaller $\alpha$. 
+
+To increase our power to avoid Type II error, the most intuitive way is to increase $\alpha$.
+
+But doing so will increase our chance to have Type I error, which is a more serious problem. 
+
+So, what we should do? 
+
+We need to decrease the sampling variance for $\bar{X}$. 
+
+## Sampling variance and power
+
+```{r}
+x <- seq(-3, 3, length=100)
+y <- dnorm(x, mean=0, sd=1)
+x_true <- x+1
+x_range <- x[(x>=qnorm(0.95, mean=0, sd=1))]
+x_range_beta <- x[(x<=qnorm(0.95, mean=0, sd=1))]
+  
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "", ylab = "Probability Density",
+     main="Sampling distribution for sample mean")
+lines(x_true, y, type = "l", lwd = 2)
+
+# axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=1), 0), 
+        col = "pink") 
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=1), 0), 
+        col = rgb(0, 0, 255, max = 255, alpha = 125, names = "blue50")) 
+
+text(x=2, y=0.02, labels="α", cex=1.3, col="red")
+text(x=2, y=0.15, labels="Power", cex=1.3, col="black")
+text(x=0, y=0.38, labels="H0", cex=1.3, col="black")
+text(x=1, y=0.38, labels="H1", cex=1.3, col="black")
+abline(v=1.65, col="red")
+abline(v=0, col="black", lty=2)
+abline(v=1, col="black", lty=2)
+```
+
+## Sampling variance and power
+
+```{r}
+x <- seq(-3, 3, length=1000)
+y <- dnorm(x, mean=0, sd=0.5)
+x_true <- x+1
+x_range <- x[(x>=qnorm(0.95, mean=0, sd=0.5))]
+x_range_beta <- x[(x<=qnorm(0.95, mean=0, sd=0.5))]
+  
+plot(x, y, type = "l", lwd = 2, axes = FALSE, xlab = "", ylab = "Probability Density",
+     main="Sampling distribution for sample mean")
+lines(x_true, y, type = "l", lwd = 2)
+
+# axis(1, at = -3:3, labels = c("172", "173", "174", "175", "176", "177", "178"))
+
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=0, sd=0.5), 0), 
+        col = "pink") 
+
+polygon(c(x_range[1], x_range, x_range[length(x_range)]), 
+        c(0, dnorm(x_range, mean=1, sd=0.5), 0), 
+        col = rgb(0, 0, 255, max = 255, alpha = 125, names = "blue50")) 
+
+text(x=1.5, y=0.02, labels="α", cex=1.3, col="red")
+text(x=1.5, y=0.15, labels="Power", cex=1.3, col="black")
+text(x=0, y=0.7, labels="H0", cex=1.3, col="black")
+text(x=1, y=0.7, labels="H1", cex=1.3, col="black")
+abline(v=qnorm(0.95, mean=0, sd=0.5), col="red")
+abline(v=0, col="black", lty=2)
+abline(v=1, col="black", lty=2)
+```
+
+## Increase power
+
+By decreasing sampling variance for $\bar{X}$, we can increase our power $1-\beta$ without modifying $\alpha$. 
+
+How do we decrease the sampling variance for $\bar{X}$?
+
+$$
+Var(\bar{X}) = \frac{\sigma^2}{n}
+$$
+
+We increase our sample size $n$ to decrease the sampling variance for $\bar{X}$.
+
+## Calculate power
+
+The next question is how much sample size is sufficient? 
+
+We need first learn how to calculate power. 
+
+It follows the following steps:
+
+- Calculate rejection region (critical value) for statistics (e.g. $\bar{X}$) using $\alpha$ and sampling variance (e.g. $\sigma^2/n$, $S^2/n$).
+- Make an assumption for $H_1$ is true by assuming $\theta_{H_1}$ (e.g., $\mu_1$).
+- Calculate power as the probability of observed statistic fall into rejection region with $H_1$ and sampling variance. 
+
+## Calculate power example
+
+Now lets work on an example for a two-tailed t test.
+
+Mood Management Theory suggests that people generally prefer positive valence movies. And we want to test if this is true. 
+
+We measured people's preference for negative vs. positive emotional movies. A positive measure indicate people prefer positive valence movies (happy movies), a negative measure indicate people prefer negative valence movies (negative movies). 
+
+We collected a random sample with $n=100$ and $S^2=100$, and want to conduct a two-tailed t test with $\alpha=0.05$ to test our hypothesis. 
+
+## Calculate power example
+
+We first state 
+
+$$
+H_0: \mu=0 
+\\
+H_1: \mu \ne 0
+$$
+
+With $n=10$ and $S^2 = 1$, we have sampling variance for our statistic
+
+$$
+\frac{\bar{X}-\mu}{\sqrt{S^2/n}} \sim t_{n-1}
+$$
+
+## Calculate power example
+
+We can calculate the rejection region for $\bar{X}$ as $(-\infty, -1.984) \cup (1.984, \infty)$
+
+Assume the true $H_1: \mu = 1$. We can calculate power as
+
+$$
+\frac{\bar{X}-\mu}{\sqrt{S^2/n}} \sim t_{99}
+\\
+\begin{align}
+1-\beta &= P(\bar{X}>1.984|\mu=1) + P(\bar{X}<-1.984|\mu=1)
+\\
+& = P(t_{99} > 0.984) + P(t_{99} < -2.984)
+\\
+& = 0.164 + 0.002 = 0.166
+\end{align}
+$$
+
+
+## Sample size calculator
+
+If sample size is known, and after we have collected our data, we can estimate the population parameter or effect sizes, then we can calculate the power with the sample size $n$ and the estimated parameter as our $H_1$. This is called post-hoc power analysis.
+
+In most cases, we conduct a priori power analysis, when we specify expected $H_1$, significance level $\alpha$, and desired power, and calculate how much sample size is needed to achieve this desired power. 
+
+In most cases, we want power $1-\beta > 0.8$ with $\alpha=0.05$. 
+
+## Sample size calculator in R
+In social sciences, we usually use G power (https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) to conduct prior power analysis.
+
+You can also use R packages (such as pwr package) to conduct prior power analysis. 
+
+## Sample size calculator
+In these softwares or packages, we usually need to specify the effect size $d$ for simplicity. 
+
+For instance, for t test, we specify the Cohen's $d$ as 
+
+$$
+d = \frac{\mu_1-\mu_0}{\sqrt{S^2}}
+$$
+
+## Sample size calculator
+
+In our previous example, how much sample sizes are needed to achieve $1-\beta = 0.8$?
+
+$$
+d = \frac{1-0}{\sqrt{100}}= 0.1
+$$
+
+```{r echo=TRUE}
+library(pwr)
+pwr.t.test(d=0.1, sig.level=0.05, power=0.8, type="one.sample", 
+           alternative="two.sided")
+```
+
+## Sample size calculator
+
+```{r echo=TRUE}
+pwr.t.test(d=0.3, sig.level=0.05, power=0.8, type="two.sample", 
+           alternative="two.sided")
+```
+
+
+## Sample size calculator
+
+```{r echo=TRUE}
+pwr.t.test(d=0.3, sig.level=0.05, power=0.8, type="two.sample",
+           alternative="two.sided")
+```
+
+## Sample size calculator
+
+```{r echo=TRUE}
+pwr.f2.test(u=5,f2=0.1,sig.level=0.05, power=0.8)
+```
