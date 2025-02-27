@@ -1355,7 +1355,7 @@ $$
 Then the degree of freedom for the $t$ distribution $k$ is given
 
 $$
-k = \frac{(\frac{S^2_x}{n} + \frac{S^2_y}{m})^2}{\frac{1}{n-1}\frac{S^2_x}{n} + \frac{1}{m-1}\frac{S^2_y}{m}}
+k = \frac{(\frac{S^2_x}{n} + \frac{S^2_y}{m})^2}{\frac{1}{n-1}(\frac{S^2_x}{n})^2 + \frac{1}{m-1}(\frac{S^2_y}{m})^2}
 $$
 
 
