@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright 2017 mathsisfun.com -->
+<svg xmlns="http://www.w3.org/2000/svg" width="467.9" height="90.5" version="1.1" style="font-family:'Comic Sans MS'; font-size:15.5px; fill:#fd3301; stroke-width:1.1;">
+<path style="color:black; overflow:visible; fill:#0169c9; stroke:#636466; stroke-width:0.1; stroke-linejoin:round;" d="m 425.9,3.4 c 2.6,0.3 8,-1.4 6.9,3 -0.2,20.6 0.3,41.5 -0.2,62 -2.3,0.9 -5.2,0.2 -7.7,0.4 -1.4,-3.3 3.3,-1.4 5.2,-1.9 1.8,-0.1 -0.1,1 0.5,-1 0,-20.2 -0.1,-41.6 0.1,-61.1 1.5,0.5 -3,0 -3.9,0.2 -1.6,0.9 -1,-2.4 -0.9,-1.6 z"/>
+<text x="367.9" y="21.5" style="font-weight:900; color:black; overflow:visible;">-2</text>
+<text x="343.8" y="21.5" style="font-weight:900; color:black; overflow:visible;">2</text>
+<text x="334.8" y="42.2" style="font-weight:900; color:black; overflow:visible;">+2</text>
+<text x="360.2" y="62.8" style="font-weight:900; color:black; overflow:visible;">+10</text>
+<text x="343.9" y="62.8" style="font-weight:900; color:black; overflow:visible;">0</text>
+<text x="377" y="42.2" style="font-weight:900; color:black; overflow:visible;">3</text>
+<path style="color:black; overflow:visible; fill:#0169c9; stroke:#636466; stroke-width:0.1; stroke-linejoin:round;" d="m 333.4,3.4 c -2.6,0.3 -8,-1.4 -6.9,3 0.2,20.6 -0.3,41.4 0.2,61.9 2.3,0.9 5.2,0.2 7.7,0.4 1.4,-3.3 -3.3,-1.4 -5.2,-1.9 -1.8,-0.1 0.1,1 -0.5,-1 -0,-20.2 0.1,-41.6 -0.1,-61.1 -1.5,0.5 3,0 3.9,0.2 1.6,0.9 1,-2.7 0.9,-1.5 z"/>
+<text x="409.2" y="21.5" style="font-weight:900; color:black; overflow:visible;">2</text>
+<text x="409.3" y="62.8" style="font-weight:900; color:black; overflow:visible;">0</text>
+<text x="401" y="42.2" style="font-weight:900; color:black; overflow:visible;">-3</text>
+<circle cx="339.6" cy="36.9" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<circle cx="373.2" cy="16.9" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<circle cx="365.5" cy="57.1" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<circle cx="405.7" cy="38" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<path style="color:black; overflow:visible; fill:#0169c9; stroke:#636466; stroke-width:0.1; stroke-linejoin:round;" d="m 273.1,3.4 c 2.6,0.3 8,-1.4 6.9,3 -0.2,20.6 0.3,41.5 -0.2,62 -2.3,0.9 -5.2,0.2 -7.7,0.4 -1.4,-3.3 3.3,-1.4 5.2,-1.9 1.8,-0.1 -0.1,1 0.5,-1 0,-20.2 -0.1,-41.6 0.1,-61.1 1.5,0.5 -3,0 -3.9,0.2 -1.6,0.9 -1,-2.4 -0.9,-1.6 z"/>
+<text x="219.1" y="23.4" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">-</text>
+<text x="186.2" y="23.5" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">+</text>
+<path style="color:black; overflow:visible; fill:#0169c9; stroke:#636466; stroke-width:0.1; stroke-linejoin:round;" d="m 180.6,3.4 c -2.6,0.3 -8,-1.4 -6.9,3 0.2,20.6 -0.3,41.4 0.2,61.9 2.3,0.9 5.2,0.2 7.7,0.4 1.4,-3.3 -3.3,-1.4 -5.2,-1.9 -1.8,-0.1 0.1,1 -0.5,-1 -0,-20.2 0.1,-41.6 -0.1,-61.1 -1.5,0.5 3,0 3.9,0.2 1.6,0.9 1,-2.7 0.9,-1.5 z"/>
+<text x="251.6" y="23.5" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">+</text>
+<text x="219" y="42.7" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">+</text>
+<text x="186.3" y="42.6" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">-</text>
+<text x="251.6" y="42.6" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">-</text>
+<text x="219.1" y="62.3" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">-</text>
+<text x="186.2" y="62.4" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">+</text>
+<text x="251.6" y="62.4" style="font-weight:bold; font-size:20.3px; color:black; overflow:visible;">+</text>
+<circle cx="225.2" cy="17.6" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<circle cx="257.5" cy="36.8" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<circle cx="225.4" cy="56.3" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<circle cx="192.7" cy="37.1" r="7.99427" style="color:black; overflow:visible; opacity:0.42; fill:#19aeff; stroke-width:7.3;"/>
+<g transform="matrix(0.363,0,0,0.363,-2056.28,-680.723)">
+	<path style="color:black; overflow:visible; fill:#0084c8; stroke-width:7.3;" d="m 6446.5,1974.3 c 27.8,-34.2 62.5,13.7 95,-3.4 -6.3,29.4 -47.7,6.3 -66.9,-0.1 -13.8,-3 -9.4,10.5 -28.1,3.5 z"/>
+	<path style="color:black; overflow:visible; fill:#0084c8; stroke-width:7.3;" d="m 6523.7,1956.3 c 11.1,11.7 41.2,27.8 6.4,21.5 -9.7,-5.5 -25.6,-17.4 -6.4,-21.5 z"/>
+	<path style="color:black; overflow:visible; fill:#0084c8; stroke-width:7.3;" d="m 6513.5,1990.9 c 13.2,-17.4 53.5,-20.6 19.7,-2.3 -1.1,-1 -6.2,10 -19.7,2.3 z"/>
+</g>
+<path style="color:black; overflow:visible; fill:#0169c9; stroke:#636466; stroke-width:0.1; stroke-linejoin:round;" d="m 116.2,0.3 c 2.6,0.3 8,-1.4 6.9,3 -0.2,20.6 0.3,41.5 -0.2,62 -2.3,0.9 -5.2,0.2 -7.7,0.4 -1.4,-3.3 3.3,-1.4 5.2,-1.9 1.8,-0.1 -0.1,1 0.5,-1 0,-20.2 -0.1,-41.6 0.1,-61.1 1.5,0.5 -3,0 -3.9,0.2 -1.6,0.9 -1,-2.4 -0.9,-1.6 z"/>
+<text x="66.6" y="18.4" style="font-weight:900; color:black; overflow:visible;">2</text>
+<text x="34.1" y="18.4" style="font-weight:900; color:black; overflow:visible;">2</text>
+<text x="26.4" y="39.1" style="font-weight:900; color:black; overflow:visible;">-2</text>
+<text x="50.5" y="59.7" style="font-weight:900; color:black; overflow:visible;">-10</text>
+<text x="34.2" y="59.7" style="font-weight:900; color:black; overflow:visible;">0</text>
+<text x="66.7" y="39.1" style="font-weight:900; color:black; overflow:visible;">3</text>
+<path style="color:black; overflow:visible; fill:#0169c9; stroke:#636466; stroke-width:0.1; stroke-linejoin:round;" d="m 23.7,0.3 c -2.6,0.3 -8,-1.4 -6.9,3 0.2,20.6 -0.3,41.4 0.2,61.9 2.3,0.9 5.2,0.2 7.7,0.4 1.4,-3.3 -3.3,-1.4 -5.2,-1.9 -1.8,-0.1 0.1,1 -0.5,-1 -0,-20.2 0.1,-41.6 -0.1,-61.1 -1.5,0.5 3,0 3.9,0.2 1.6,0.9 1,-2.7 0.9,-1.5 z"/>
+<text x="99.5" y="18.4" style="font-weight:900; color:black; overflow:visible;">2</text>
+<text x="99.6" y="59.7" style="font-weight:900; color:black; overflow:visible;">0</text>
+<text x="99.6" y="39.1" style="font-weight:900; color:black; overflow:visible;">3</text>
+<text x="-1" y="87.5" style="font-size:18.4px; font-style:italic; color:black; overflow:visible; fill:#005c94; stroke-width:1px;">Matrix of Minors</text>
+<g transform="matrix(0.363,0,0,0.363,-2211.22,-680.723)">
+	<path style="color:black; overflow:visible; fill:#0084c8; stroke-width:7.3;" d="m 6446.5,1974.3 c 27.8,-34.2 62.5,13.7 95,-3.4 -6.3,29.4 -47.7,6.3 -66.9,-0.1 -13.8,-3 -9.4,10.5 -28.1,3.5 z"/>
+	<path style="color:black; overflow:visible; fill:#0084c8; stroke-width:7.3;" d="m 6523.7,1956.3 c 11.1,11.7 41.2,27.8 6.4,21.5 -9.7,-5.5 -25.6,-17.4 -6.4,-21.5 z"/>
+	<path style="color:black; overflow:visible; fill:#0084c8; stroke-width:7.3;" d="m 6513.5,1990.9 c 13.2,-17.4 53.5,-20.6 19.7,-2.3 -1.1,-1 -6.2,10 -19.7,2.3 z"/>
+</g>
+<text x="291.8" y="87.5" style="font-size:18.4px; font-style:italic; color:black; overflow:visible; fill:#005c94; stroke-width:1px;">Matrix of CoFactors</text>
+</svg>
